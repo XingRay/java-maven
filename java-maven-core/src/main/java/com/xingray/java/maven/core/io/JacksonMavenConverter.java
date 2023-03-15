@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.xingray.java.maven.core.model.ProjectObjectModel;
+import com.xingray.java.maven.core.model.MavenProject;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class JacksonMavenConverter {
         this.xmlMapper = xmlMapper;
     }
 
-    public String toXmlString(ProjectObjectModel model) {
+    public String toXmlString(MavenProject model) {
         try {
             return xmlMapper.writeValueAsString(model);
         } catch (JsonProcessingException e) {
@@ -35,15 +35,15 @@ public class JacksonMavenConverter {
         }
     }
 
-    public ProjectObjectModel fromXmlString(String s) throws JsonProcessingException {
-        return xmlMapper.readValue(s, ProjectObjectModel.class);
+    public MavenProject fromXmlString(String s) throws JsonProcessingException {
+        return xmlMapper.readValue(s, MavenProject.class);
     }
 
-    public void writeToFile(ProjectObjectModel model, File file) throws IOException {
+    public void writeToFile(MavenProject model, File file) throws IOException {
         xmlMapper.writeValue(file, model);
     }
 
-    public ProjectObjectModel readFromFile(File file) throws IOException {
-        return xmlMapper.readValue(file, ProjectObjectModel.class);
+    public MavenProject readFromFile(File file) throws IOException {
+        return xmlMapper.readValue(file, MavenProject.class);
     }
 }

@@ -12,7 +12,7 @@ import java.util.Properties;
 @JacksonXmlRootElement(localName = "project")
 @JsonIgnoreProperties(ignoreUnknown = true, value = {"schemaLocation"})
 @JsonPropertyOrder({"modelVersion", "groupId", "artifactId", "version", "properties", "dependencyManagement", "dependencies", "build"})
-public class ProjectObjectModel {
+public class MavenProject extends Model {
 
     @JacksonXmlProperty(isAttribute = true, localName = "xmlns")
     private String xmlns = "http://maven.apache.org/POM/4.0.0";
@@ -24,15 +24,6 @@ public class ProjectObjectModel {
     private String schemaLocation = "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd";
 
     private String modelVersion = "4.0.0";
-
-    private String groupId;
-    private String artifactId;
-    private String version;
-
-    private String packaging;
-    private String name;
-    private String description;
-    private String url;
 
     @JacksonXmlElementWrapper(localName = "models")
     @JacksonXmlProperty(localName = "model")
@@ -79,68 +70,12 @@ public class ProjectObjectModel {
         this.modelVersion = modelVersion;
     }
 
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getArtifactId() {
-        return artifactId;
-    }
-
-    public void setArtifactId(String artifactId) {
-        this.artifactId = artifactId;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getPackaging() {
-        return packaging;
-    }
-
-    public void setPackaging(String packaging) {
-        this.packaging = packaging;
-    }
-
     public Build getBuild() {
         return build;
     }
 
     public void setBuild(Build build) {
         this.build = build;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public List<String> getModules() {
@@ -177,18 +112,11 @@ public class ProjectObjectModel {
 
     @Override
     public String toString() {
-        return "ProjectObjectModel{" +
+        return "MavenProject{" +
                 "xmlns='" + xmlns + '\'' +
                 ", xsi='" + xsi + '\'' +
                 ", schemaLocation='" + schemaLocation + '\'' +
                 ", modelVersion='" + modelVersion + '\'' +
-                ", groupId='" + groupId + '\'' +
-                ", artifactId='" + artifactId + '\'' +
-                ", version='" + version + '\'' +
-                ", packaging='" + packaging + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", url='" + url + '\'' +
                 ", modules=" + modules +
                 ", dependencies=" + dependencies +
                 ", dependencyManagement=" + dependencyManagement +
@@ -197,24 +125,24 @@ public class ProjectObjectModel {
                 '}';
     }
 
-    public ProjectObjectModel() {
+    public MavenProject() {
     }
 
-    public ProjectObjectModel(String groupId, String artifactId, String version) {
-        this.groupId = groupId;
-        this.artifactId = artifactId;
-        this.version = version;
+    public MavenProject(String groupId, String artifactId, String version) {
+        setGroupId(groupId);
+        setArtifactId(artifactId);
+        setVersion(version);
     }
 
-    public static ProjectObjectModel ofGav(String[] gav) {
-        return new ProjectObjectModel(gav[0], gav[1], gav[2]);
+    public static MavenProject ofGav(String[] gav) {
+        return new MavenProject(gav[0], gav[1], gav[2]);
     }
 
-    public static ProjectObjectModel ofGav(String gav) {
+    public static MavenProject ofGav(String gav) {
         return ofGav(gav.split(":"));
     }
 
-    public ProjectObjectModel addProperty(String key, String value) {
+    public MavenProject addProperty(String key, String value) {
         if (properties == null) {
             properties = new Properties();
         }

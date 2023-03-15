@@ -6,4 +6,6 @@ module com.xingray.java.maven.core {
 
     exports com.xingray.java.maven.core.model;
     opens com.xingray.java.maven.core.model;
+
+    exports com.xingray.java.maven.core.io;
 }
